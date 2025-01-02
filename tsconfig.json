@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "moduleDetection": "force",
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
+    "target": "ESNext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "allowJs": true,
+    "paths": {
+      "@src/*": ["./*"],
+      "@routes/*": ["./routes/*"],
+      "@configurations/*": ["./configurations/*"],
+      "@data/*": ["./data/*"],
+      "@controllers/*": ["./controllers/*"],
+      "@services/*": ["./services/*"]
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
+    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
+    "noImplicitReturns": true /* Enable error reporting for codepaths that do not explicitly return in a function. */,
+    "noFallthroughCasesInSwitch": true /* Enable error reporting for fallthrough cases in switch statements. */
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
