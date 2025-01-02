@@ -21,8 +21,8 @@ export async function sendNotification(req: Request, res: Response) {
 
 export async function registerUserDevice(req: Request, res: Response) {
   const { guId: userGuId, token } = req.params as RegisterUserDevice;
-  await service.registerUserDevice({ userGuId, token });
   try {
+    await service.registerUserDevice({ userGuId, token });
     res.status(200).send({
       message: 'User device successfully registered!',
     });
@@ -36,8 +36,8 @@ export async function registerUserDevice(req: Request, res: Response) {
 
 export async function unregisterUserDevice(req: Request, res: Response) {
   const { guId: userGuId, token } = req.params as RegisterUserDevice;
-  await service.unregisterUserDevice({ userGuId, token });
   try {
+    await service.unregisterUserDevice({ userGuId, token });
     res.status(200).send({
       message: 'User device successfully unregistered!',
     });
