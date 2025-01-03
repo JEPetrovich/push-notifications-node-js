@@ -1,7 +1,7 @@
 import 'module-alias/register.js';
 import express from 'express';
-import notificationsRoute from '@src/routes/notifications-route.js';
-import print from '@src/configurations/print-configuration.js';
+import notificationsRoute from '@routes/notifications-route.js';
+import print from '@configurations/print-configuration.js';
 
 process.loadEnvFile();
 

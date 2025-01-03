@@ -1,6 +1,6 @@
-import firebaseAdmin from '@src/configurations/firebase/admin-firebase-configuration.js';
 import { Request, Response } from 'express-serve-static-core';
-import * as service from '@src/services/notifications-service.js';
+import firebaseAdmin from '@configurations/firebase/admin-firebase-configuration.js';
+import * as service from '@services/notifications-service.js';
 
 export async function sendNotification(req: Request, res: Response) {
   const { token, notification } = req.body as FirebaseNotification;

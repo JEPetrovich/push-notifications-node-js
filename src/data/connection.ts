@@ -1,4 +1,4 @@
-import print from '@src/configurations/print-configuration.js';
+import print from '@configurations/print-configuration.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
