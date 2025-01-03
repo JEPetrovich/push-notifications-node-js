@@ -25,6 +25,16 @@ type FirebaseNotification = {
   /** Token del dispositivo */
   token: string;
 };
+
+/** Example of body request */
+
+const body: FirebaseNotification = {
+ notification: {
+    title: 'Example title notification',
+    body: 'Example body notification',
+  },
+  token: 'YOUR_DEVICE_TOKEN';
+}
 ```
 
 <h2>Endpoints</h2>
