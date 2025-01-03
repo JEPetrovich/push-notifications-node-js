@@ -15,10 +15,10 @@
 <p>El almacenamiento se realiza a través de un archivo ".json" local (no por bdd), ubicado en "src/data/user-devices.json", que contiene una lista de elementos con el siguiente esquema por item:</p>
 
 ```typescript
-    type UserDevice = {
-      'user-guid': string;
-      tokens: string[]; /** Un usuario puede tener varios dispositivos vinculados */
-    };
+type UserDevice = {
+  'user-guid': string;
+  tokens: string[] /** Un usuario puede tener varios dispositivos vinculados */;
+};
 ```
 
 <h2>Endpoints</h2>
@@ -50,7 +50,7 @@ const body: FirebaseNotification = {
 }
 ```
 
-<p>Route y controller:</p>
+<h3>Ruta notificaciones y controladores:</h3>
 
 ```typescript
 router.post('/send', sendNotification);
@@ -71,7 +71,28 @@ async function sendNotification(req: Request, res: Response) {
     });
   }
 }
+
+router.post('/send-no-deps', sendNotificationNoDeps);
+
+async function sendNotificationNoDeps(req: Request, res: Response) {
+  const { token, notification } = req.body as FirebaseNotification;
+  const data = { token, notification };
+  try {
+    const response = await service.sendNotification(data);
+    res.status(200).send({
+      message: 'Notification sent successfully!',
+      data: response?.data,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: 'Error sending notification.',
+      error,
+    });
+  }
+}
 ```
+
+<p>Ambos endpoints ('/send' y '/send-no-deps') funcionan de la misma forma, la diferencia es que '/send' realiza la autenticación contra firebase a través de una dependencia y '/send-no-deps' autentica sin utilizar ninguna dependencia de firebase.</p>
 
 <p><b>api/notifications/register/user/:guId/device/:token</b> | Guarda guId del usuario y asocia el token del dispositivo al mismo:</p>
 
