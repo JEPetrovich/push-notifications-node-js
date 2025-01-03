@@ -50,9 +50,7 @@ const body: FirebaseNotification = {
 }
 ```
 
-<h3>Ruta notificaciones y controladores:</h3>
-
-<p><b>api/notifications/send</b> | Guarda guId del usuario y asocia el token del dispositivo al mismo:</p>
+<h4>Ruta y controlador:</h4>
 
 ```typescript
 /* Route */
@@ -77,7 +75,7 @@ async function sendNotification(req: Request, res: Response) {
 }
 ```
 
-<p><b>api/notifications/send-no-deps</b> | Guarda guId del usuario y asocia el token del dispositivo al mismo:</p>
+<p><b>api/notifications/send-no-deps</b> | (idem /api/notifications/send):</p>
 
 ```typescript
 /* Route */
