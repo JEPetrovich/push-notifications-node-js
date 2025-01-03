@@ -54,7 +54,7 @@ const body: FirebaseNotification = {
 
 ```typescript
 /* Route */
-router.post('/send', sendNotification);
+router.post('/send', controller.sendNotification);
 
 /* Controller */
 async function sendNotification(req: Request, res: Response) {
@@ -79,7 +79,7 @@ async function sendNotification(req: Request, res: Response) {
 
 ```typescript
 /* Route */
-router.post('/send-no-deps', sendNotificationNoDeps);
+router.post('/send-no-deps', controller.sendNotificationNoDeps);
 
 /* Controller */
 async function sendNotificationNoDeps(req: Request, res: Response) {
