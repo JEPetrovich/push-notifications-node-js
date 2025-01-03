@@ -2,6 +2,23 @@ import { Request, Response } from 'express-serve-static-core';
 import firebaseAdmin from '@configurations/firebase/admin-firebase-configuration.js';
 import * as service from '@services/notifications-service.js';
 
+export async function sendNotificationNoDeps(req: Request, res: Response) {
+  const { token, notification } = req.body as FirebaseNotification;
+  const data = { token, notification };
+  try {
+    const response = await service.sendNotification(data);
+    res.status(200).send({
+      message: 'Notification sent successfully!',
+      data: response?.data,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: 'Error sending notification.',
+      error,
+    });
+  }
+}
+
 export async function sendNotification(req: Request, res: Response) {
   const { token, notification } = req.body as FirebaseNotification;
   const data = { token, notification };

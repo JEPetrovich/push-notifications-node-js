@@ -1,15 +1,12 @@
 import print from '@configurations/print-configuration.js';
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import * as fm from '@configurations/file-manager/file-manager-configuration.js';
 
-const __dirname: string = import.meta.dirname;
-const filePath: string = path.join(__dirname, './user-devices.json');
+const filePath: string = './data/user-devices.json';
 
 export async function getUserDevices() {
   try {
-    const data = await fs.readFile(filePath, {
-      encoding: 'utf-8',
-    });
+    const data = await fm.getFileData({ filePath });
+    if (data == null) throw new Error('Unknown file path.');
     const userDevices: UserDevice[] = JSON.parse(data);
     return userDevices;
   } catch (error) {
@@ -23,7 +20,7 @@ export async function getUserDevices() {
 export async function updateUserDevices(newUserDevices: UserDevice[]) {
   try {
     const data: string = JSON.stringify(newUserDevices);
-    await fs.writeFile(filePath, data);
+    await fm.setFileData({ filePath, data });
     print({ format: 'green', message: 'User devices updated successfully!' });
   } catch (error) {
     console.group('Error updating "user-devices.json":');
