@@ -52,9 +52,13 @@ const body: FirebaseNotification = {
 
 <h3>Ruta notificaciones y controladores:</h3>
 
+<p><b>api/notifications/send</b> | Guarda guId del usuario y asocia el token del dispositivo al mismo:</p>
+
 ```typescript
+/* Route */
 router.post('/send', sendNotification);
 
+/* Controller */
 async function sendNotification(req: Request, res: Response) {
   const { token, notification } = req.body as FirebaseNotification;
   const data = { token, notification };
@@ -71,9 +75,15 @@ async function sendNotification(req: Request, res: Response) {
     });
   }
 }
+```
 
+<p><b>api/notifications/send-no-deps</b> | Guarda guId del usuario y asocia el token del dispositivo al mismo:</p>
+
+```typescript
+/* Route */
 router.post('/send-no-deps', sendNotificationNoDeps);
 
+/* Controller */
 async function sendNotificationNoDeps(req: Request, res: Response) {
   const { token, notification } = req.body as FirebaseNotification;
   const data = { token, notification };
@@ -90,6 +100,27 @@ async function sendNotificationNoDeps(req: Request, res: Response) {
     });
   }
 }
+
+/* Service */
+async function sendNotification(firebaseNotification: FirebaseNotification) {
+  const PROJECT_ID: string = process.env.PROJECT_ID || 'unknown';
+  const url: string = `https://fcm.googleapis.com/v1/projects/${PROJECT_ID}/messages:send`;
+
+  const firebaseAccessToken: string = await getFirebaseAccessToken();
+
+  const data = {
+    message: firebaseNotification,
+  };
+
+  const response = await axios.post(url, data, {
+    headers: {
+      Authorization: `Bearer ${firebaseAccessToken}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response;
+}
 ```
 
 <p>Ambos endpoints ('/send' y '/send-no-deps') funcionan de la misma forma, la diferencia es que '/send' realiza la autenticación contra firebase a través de una dependencia y '/send-no-deps' autentica sin utilizar ninguna dependencia de firebase.</p>
@@ -97,8 +128,10 @@ async function sendNotificationNoDeps(req: Request, res: Response) {
 <p><b>api/notifications/register/user/:guId/device/:token</b> | Guarda guId del usuario y asocia el token del dispositivo al mismo:</p>
 
 ```typescript
+/* Route */
 router.put('/register/user/:guId/device/:token', controller.registerUserDevice);
 
+/* Controller */
 async function registerUserDevice(req: Request, res: Response) {
   const { guId: userGuId, token } = req.params as RegisterUserDevice;
   await service.registerUserDevice({ userGuId, token });
@@ -118,11 +151,13 @@ async function registerUserDevice(req: Request, res: Response) {
 <p><b>api/notifications/unregister/user/:guId/device/:token</b> | Quita la asociación entre el token del dispositivo y el usuario:</p>
 
 ```typescript
+/* Route */
 router.put(
   '/unregister/user/:guId/device/:token',
   controller.registerUserDevice
 );
 
+/* Controller */
 async function unregisterUserDevice(req: Request, res: Response) {
   const { guId: userGuId, token } = req.params as RegisterUserDevice;
   await service.unregisterUserDevice({ userGuId, token });
